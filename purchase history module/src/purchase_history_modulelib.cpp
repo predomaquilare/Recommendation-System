@@ -1,4 +1,4 @@
-#include "../include/purchase_history_modulelib.cpp"
+#include "../include/purchase_history_modulelib.hpp"
 
 
 
@@ -13,8 +13,15 @@ PurchaseHistory::~PurchaseHistory(){}
 
 void PurchaseHistory::load_csv(int num, char **file) {
   for(int i = 0; i < num-1; i++) { 
-    std::ifstream arquivo("../../sales_data/" + file[i+1]);
+    std::string path = "../sales_data/" + std::string(file[i+1]) + ".csv";
+    std::ifstream arquivo(path);
     std::string linha;
+
+    if (!arquivo.is_open()) {
+      std::cerr << "Erro ao abrir arquivo: " << path << std::endl;
+      continue;
+    }
+
     while (std::getline(arquivo, linha)) {
 
       std::stringstream ss(linha);
@@ -25,14 +32,8 @@ void PurchaseHistory::load_csv(int num, char **file) {
       std::getline(ss, produto, ',');
       std::getline(ss, nome);
 
-      std::cout << "Data: " << data << std::endl;
-      std::cout << "Cliente: " << cliente << std::endl;
-      std::cout << "Produto: " << produto << std::endl;
-      std::cout << "Nome: " << nome << std::endl;
-      std::cout << "-------------------" << std::endl;
+      all_clients.push_back(cliente);
+      all_products.push_back(nome);
     }
   }
-
-
-
 }
