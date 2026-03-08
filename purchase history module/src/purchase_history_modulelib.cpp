@@ -13,12 +13,12 @@ PurchaseHistory::~PurchaseHistory(){}
 
 void PurchaseHistory::load_csv(int num, char **file) {
   for(int i = 0; i < num-1; i++) { 
-    std::string path = "../sales_data/" + std::string(file[i+1]) + ".csv";
-    std::ifstream arquivo(path);
+    // std::string path = "../sales_data/" + std::string() + ".csv";
+    std::ifstream arquivo(file[i+1]);
     std::string linha;
 
     if (!arquivo.is_open()) {
-      std::cerr << "Erro ao abrir arquivo: " << path << std::endl;
+      std::cerr << "Erro ao abrir arquivo: " << file[i+1] << std::endl;
       continue;
     }
 
@@ -33,7 +33,9 @@ void PurchaseHistory::load_csv(int num, char **file) {
       all_products.push_back(nome);
     }
   }
-
+  PurchaseHistory::clean_vector(&all_clients);
+  PurchaseHistory::clean_vector(&all_products);
+  std::cout << all_clients.size() << std::endl;
   purchase_history = std::vector<std::list<std::string>>(all_clients.size());
 }
 
@@ -43,9 +45,8 @@ void PurchaseHistory::fill_hash_vector() {
 
 }
 
-void PurchaseHistory::clean_vector() {
-  std::sort(all_clients.begin(), all_clients.end());
-  all_clients.erase(std::unique(all_clients.begin(), all_clients.end()), all_clients.end());
-  std::sort(all_products.begin(), all_products.end());
-  all_products.erase(std::unique(all_products.begin(), all_products.end()), all_products.end());
+void PurchaseHistory::clean_vector(std::vector<std::string> *clean_vector) {
+  std::sort(clean_vector->begin(), clean_vector->end());
+  clean_vector->erase(std::unique(clean_vector->begin(), clean_vector->end()), clean_vector->end());
 }
+

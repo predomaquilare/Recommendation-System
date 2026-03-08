@@ -32,7 +32,7 @@ class PurchaseHistory {
     unsigned long long hash_function_product(std::string);
     
     void fill_hash_vector();
-    void clean_vector();
+    void clean_vector(std::vector<std::string> *clean_vector);
 
 
 };
