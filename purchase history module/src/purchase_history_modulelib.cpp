@@ -23,17 +23,29 @@ void PurchaseHistory::load_csv(int num, char **file) {
     }
 
     while (std::getline(arquivo, linha)) {
-
       std::stringstream ss(linha);
       std::string data, cliente, produto, nome;
-
       std::getline(ss, data, ',');
       std::getline(ss, cliente, ',');
       std::getline(ss, produto, ',');
       std::getline(ss, nome);
-
       all_clients.push_back(cliente);
       all_products.push_back(nome);
     }
   }
+
+  purchase_history = std::vector<std::list<std::string>>(all_clients.size());
+}
+
+void PurchaseHistory::fill_hash_vector() {
+
+
+
+}
+
+void PurchaseHistory::clean_vector() {
+  std::sort(all_clients.begin(), all_clients.end());
+  all_clients.erase(std::unique(all_clients.begin(), all_clients.end()), all_clients.end());
+  std::sort(all_products.begin(), all_products.end());
+  all_products.erase(std::unique(all_products.begin(), all_products.end()), all_products.end());
 }
