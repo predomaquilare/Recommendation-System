@@ -25,6 +25,7 @@ void PurchaseHistory::load_csv(int num, char **file) {
       std::stringstream ss(linha);
       std::string data, cliente, produto, nome;
       std::getline(ss, data, ',');
+      if(data == "DATA_COMPRA") continue;
       std::getline(ss, cliente, ',');
       std::getline(ss, produto, ',');
       std::getline(ss, nome);
@@ -32,10 +33,8 @@ void PurchaseHistory::load_csv(int num, char **file) {
       all_products.push_back(nome);
     }
   }
-
   PurchaseHistory::clean_vector(all_clients);
   PurchaseHistory::clean_vector(all_products);
-
   PurchaseHistory::vectorToMap(all_clients, map_client);
   PurchaseHistory::vectorToMap(all_products, map_product);
 
@@ -62,10 +61,6 @@ void PurchaseHistory::load_csv(int num, char **file) {
       int client_id = map_client[cliente];
       purchase_history[client_id].push_back(nome);
     }
-  }
-
-  for (auto &par : map_client) {
-    std::cout << par.first << " > " << par.second << std::endl;
   }
 }
 
