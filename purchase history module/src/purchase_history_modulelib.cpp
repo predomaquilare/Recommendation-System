@@ -12,12 +12,12 @@ PurchaseHistory::~PurchaseHistory(){}
 
 
 void PurchaseHistory::load_csv(int num, char **file) {
-  for(int i = 0; i < num-1; i++) { 
-    std::ifstream arquivo(file[i+1]);
+  for (int i = 0; i < num - 1; i++) {
+    std::ifstream arquivo(file[i + 1]);
     std::string linha;
 
     if (!arquivo.is_open()) {
-      std::cerr << "Erro ao abrir arquivo: " << file[i+1] << std::endl;
+      std::cerr << "Erro ao abrir arquivo: " << file[i + 1] << std::endl;
       continue;
     }
 
@@ -32,12 +32,41 @@ void PurchaseHistory::load_csv(int num, char **file) {
       all_products.push_back(nome);
     }
   }
+
   PurchaseHistory::clean_vector(all_clients);
   PurchaseHistory::clean_vector(all_products);
+
   PurchaseHistory::vectorToMap(all_clients, map_client);
   PurchaseHistory::vectorToMap(all_products, map_product);
-  for(auto &par : map_client) std::cout << par.first << " > " << par.second << std::endl;
+
   purchase_history = std::vector<std::list<std::string>>(all_clients.size());
+
+  for (int i = 0; i < num - 1; i++) {
+    std::ifstream arquivo(file[i + 1]);
+    std::string linha;
+
+    if (!arquivo.is_open()) {
+      std::cerr << "Erro ao abrir arquivo: " << file[i + 1] << std::endl;
+      continue;
+    }
+
+    while (std::getline(arquivo, linha)) {
+      std::stringstream ss(linha);
+      std::string data, cliente, produto, nome;
+
+      std::getline(ss, data, ',');
+      std::getline(ss, cliente, ',');
+      std::getline(ss, produto, ',');
+      std::getline(ss, nome);
+
+      int client_id = map_client[cliente];
+      purchase_history[client_id].push_back(nome);
+    }
+  }
+
+  for (auto &par : map_client) {
+    std::cout << par.first << " > " << par.second << std::endl;
+  }
 }
 
 void PurchaseHistory::vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping) {
