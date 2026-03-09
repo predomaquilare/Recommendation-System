@@ -25,14 +25,14 @@ class PurchaseHistory {
     std::vector<std::list<std::string>> purchase_history;
     std::vector<std::vector<std::string>> hash_vector;
 
-    std::map<std::string, int> map_client;
-    std::map<std::string, int> map_product;
+    std::unordered_map<std::string, int> map_client;
+    std::unordered_map<std::string, int> map_product;
 
     unsigned long long hash_function_client(std::string);
     unsigned long long hash_function_product(std::string);
     
-    void fill_hash_vector();
-    void clean_vector(std::vector<std::string> *clean_vector);
+    void vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping);
+    void clean_vector(std::vector<std::string> &clean_vector);
 
 
 };

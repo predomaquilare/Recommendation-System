@@ -13,7 +13,6 @@ PurchaseHistory::~PurchaseHistory(){}
 
 void PurchaseHistory::load_csv(int num, char **file) {
   for(int i = 0; i < num-1; i++) { 
-    // std::string path = "../sales_data/" + std::string() + ".csv";
     std::ifstream arquivo(file[i+1]);
     std::string linha;
 
@@ -33,20 +32,20 @@ void PurchaseHistory::load_csv(int num, char **file) {
       all_products.push_back(nome);
     }
   }
-  PurchaseHistory::clean_vector(&all_clients);
-  PurchaseHistory::clean_vector(&all_products);
-  std::cout << all_clients.size() << std::endl;
+  PurchaseHistory::clean_vector(all_clients);
+  PurchaseHistory::clean_vector(all_products);
+  PurchaseHistory::vectorToMap(all_clients, map_client);
+  PurchaseHistory::vectorToMap(all_products, map_product);
+  for(auto &par : map_client) std::cout << par.first << " > " << par.second << std::endl;
   purchase_history = std::vector<std::list<std::string>>(all_clients.size());
 }
 
-void PurchaseHistory::fill_hash_vector() {
-
-
-
+void PurchaseHistory::vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping) {
+  for(size_t i = 0; i < vetor.size(); i++) mapping[vetor[i]] = i;
 }
 
-void PurchaseHistory::clean_vector(std::vector<std::string> *clean_vector) {
-  std::sort(clean_vector->begin(), clean_vector->end());
-  clean_vector->erase(std::unique(clean_vector->begin(), clean_vector->end()), clean_vector->end());
+void PurchaseHistory::clean_vector(std::vector<std::string> &clean_vector) {
+  std::sort(clean_vector.begin(), clean_vector.end());
+  clean_vector.erase(std::unique(clean_vector.begin(), clean_vector.end()), clean_vector.end());
 }
 
