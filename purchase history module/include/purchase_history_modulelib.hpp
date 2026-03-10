@@ -10,7 +10,7 @@
 #include <algorithm>
 #include <mutex>
 #include <unistd.h>
-
+#include <unordered_map>
 
 class PurchaseHistory {
 
