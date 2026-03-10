@@ -30,8 +30,8 @@ void PurchaseHistory::load_csv(int num, char **file) {
   }
   PurchaseHistory::clean_vector(all_clients);
   PurchaseHistory::clean_vector(all_products);
-  PurchaseHistory::vectorToMap(all_clients, map_client);
-  PurchaseHistory::vectorToMap(all_products, map_product);
+  PurchaseHistory::vectorToMap(all_clients, map_client_to_id, map_id_to_client);
+  PurchaseHistory::vectorToMap(all_products, map_product_to_id, map_id_to_product);
   purchase_history = std::vector<std::list<int>>(all_clients.size());
 
   for (int i = 0; i < num - 1; i++) {
@@ -49,13 +49,16 @@ void PurchaseHistory::load_csv(int num, char **file) {
       std::getline(ss, cliente, ',');
       std::getline(ss, produto, ',');
       std::getline(ss, nome);
-      purchase_history[map_client[cliente]].push_back(map_product[nome]);
+      purchase_history[map_client_to_id[cliente]].push_back(map_product_to_id[nome]);
     }
   }
 }
 
-void PurchaseHistory::vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping) {
-  for(size_t i = 0; i < vetor.size(); i++) mapping[vetor[i]] = i;
+void PurchaseHistory::vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping_to_id, std::unordered_map<int, std::string> &id_to_mapping) {
+  for(size_t i = 0; i < vetor.size(); i++) {
+    mapping_to_id[vetor[i]] = i;
+    id_to_mapping[i] = vetor[i];
+  }
 }
 
 void PurchaseHistory::clean_vector(std::vector<std::string> &clean_vector) {
@@ -64,18 +67,27 @@ void PurchaseHistory::clean_vector(std::vector<std::string> &clean_vector) {
 }
 
 std::string PurchaseHistory::get_client_code_by_id(int client) {
-   return "still working on"
+  return map_id_to_client[client];
 }
 
 std::string PurchaseHistory::get_product_code_by_id(int product) {
-   return "still working on"
+  return map_id_to_product[product];
 }
 
-std::list<int> PurchaseHistory::get_items_from_client(std::vector<std::list<int>> client)
+std::unordered_map<int,int> PurchaseHistory::get_items_from_client(int client_id) {
+  std::unordered_map<int,int> product_count;
+  for(int product : purchase_history[client_id]) {
+    product_count[product]++;
+  }
+  return product_count;
+}
 
 void PurchaseHistory::terminal_acess() {
+  int option_choosen;
+  int id;
   do {
-    int option_choosen = 0;
+    option_choosen = 0;
+    id = 0;
     std::cout << "\033[2J\033[H"; // limpa terminal
     std::cout << "<=== PurchaseHistoryModule Menu ===>" << std::endl;
     std::cout << "<===      Choose an option      ===>" << std::endl;
@@ -86,23 +98,36 @@ void PurchaseHistory::terminal_acess() {
     std::cin >> option_choosen;
 
     switch(option_choosen) {
-      case 1:
+      case 1: {
+                std::cout << "Type the client's id: ";
+                std::cin >> id;
+                auto items = PurchaseHistory::get_items_from_client(id);
+                for(auto &p : items) std::cout << get_product_code_by_id(p.first) << " -> " << p.second << std::endl;
+                sleep(3);
+              }
+              break;
 
-      break;
+      case 2: {
+                std::cout << "<===      Choose an option      ===>" << std::endl;
+                std::cout << "<===    Type the client's id    ===>" << std::endl;
+                std::cin >> id;
+                std::cout << PurchaseHistory::get_client_code_by_id(id) << std::endl;
+                sleep(3);
+              }
+              break;
 
-      case 2:
-
-      break;
-
-      case 3:
-
-      break;
+      case 3: {
+                std::cout << "<===      Choose an option      ===>" << std::endl;
+                std::cout << "<===   Type the product's id    ===>" << std::endl;
+                std::cin >> id;
+                std::cout << PurchaseHistory::get_product_code_by_id(id) << std::endl;
+                sleep(3);
+              }
+              break;
 
       case 4:
-        quit_flag = true;
-      break;
-
-
+              quit_flag = true;
+              break;
     }
 
 
