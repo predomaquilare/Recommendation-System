@@ -5,8 +5,7 @@
 #include "../include/purchase_history_modulelib.hpp"
 
 int main (int argc, char **argv) {
-  PurchaseHistory module;
-  module.load_csv(argc, argv);
+  PurchaseHistory module(argc, argv);
   return 0;
 }
 

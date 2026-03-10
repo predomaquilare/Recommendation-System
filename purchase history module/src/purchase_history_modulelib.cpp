@@ -1,8 +1,9 @@
 #include "../include/purchase_history_modulelib.hpp"
 
-PurchaseHistory::PurchaseHistory() {
-
-
+PurchaseHistory::PurchaseHistory(int num, char **file) {
+  quit_flag = false;
+  PurchaseHistory::load_csv(num, file);
+  PurchaseHistory::terminal_acess();
 }
 
 PurchaseHistory::~PurchaseHistory(){}
@@ -62,4 +63,40 @@ void PurchaseHistory::clean_vector(std::vector<std::string> &clean_vector) {
   clean_vector.erase(std::unique(clean_vector.begin(), clean_vector.end()), clean_vector.end());
 }
 
+void PurchaseHistory::terminal_acess() {
+  do {
+    int option_choosen = 0;
+    std::cout << "\033[2J\033[H"; // limpa terminal
+    std::cout << "<=== PurchaseHistoryModule Menu ===>" << std::endl;
+    std::cout << "<===      Choose an option      ===>" << std::endl;
+    std::cout << "<=   1 -> Get client items        =>" << std::endl;
+    std::cout << "<=   2 -> Get client code by id   =>" << std::endl;
+    std::cout << "<=   3 -> Get product code by id  =>" << std::endl;
+    std::cout << "<=   4 -> Quit                    =>" << std::endl;
+    std::cin >> option_choosen;
 
+    switch(option_choosen) {
+      case 1:
+
+      break;
+
+      case 2:
+
+      break;
+
+      case 3:
+
+      break;
+
+      case 4:
+        quit_flag = true;
+      break;
+
+
+    }
+
+
+  } while(quit_flag == false);
+
+
+}
