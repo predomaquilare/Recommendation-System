@@ -3,7 +3,7 @@
 PurchaseHistory::PurchaseHistory(int num, char **file, bool terminal) {
   quit_flag = false;
   PurchaseHistory::load_csv(num, file);
-  if(terminal) PurchaseHistory::terminal_acess();
+  if(terminal) PurchaseHistory::terminal_access();
 }
 
 PurchaseHistory::~PurchaseHistory(){}
@@ -90,7 +90,7 @@ std::unordered_map<int,int> PurchaseHistory::get_items_from_client(int client_id
   return product_count;
 }
 
-void PurchaseHistory::terminal_acess() {
+void PurchaseHistory::terminal_access() {
   int option_choosen;
   int id;
   do {

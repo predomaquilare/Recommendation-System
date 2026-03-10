@@ -37,5 +37,5 @@ class PurchaseHistory {
     void vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping_to_id, std::unordered_map<int, std::string> &id_to_mapping); 
     void clean_vector(std::vector<std::string> &clean_vector);
     void load_csv(int num, char **file);
-    void terminal_acess();
+    void terminal_access();
 };
