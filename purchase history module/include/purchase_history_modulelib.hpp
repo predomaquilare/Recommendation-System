@@ -17,12 +17,10 @@ class PurchaseHistory {
     PurchaseHistory();
     ~PurchaseHistory();
     void load_csv(int num, char **file);
-
-
   private:
     std::vector<std::string> all_clients;
     std::vector<std::string> all_products;
-    std::vector<std::list<std::string>> purchase_history;
+    std::vector<std::list<int>> purchase_history;
     std::vector<std::vector<std::string>> hash_vector;
 
     std::unordered_map<std::string, int> map_client;
@@ -33,6 +31,4 @@ class PurchaseHistory {
     
     void vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping);
     void clean_vector(std::vector<std::string> &clean_vector);
-
-
 };
