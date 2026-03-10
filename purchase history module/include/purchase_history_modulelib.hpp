@@ -26,12 +26,13 @@ class PurchaseHistory {
     std::unordered_map<std::string, int> map_product;
 
     bool quit_flag;
-    // unsigned long long hash_function_client(std::string);
-    // unsigned long long hash_function_product(std::string);
     
     void vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping);
     void clean_vector(std::vector<std::string> &clean_vector);
     void load_csv(int num, char **file);
 
+    std::list<int> get_items_from_client(std::vector<std::list<int>> client);
+    std::string get_client_code_by_id(int client);
+    std::string get_product_code_by_id(int product);
     void terminal_acess();
 };

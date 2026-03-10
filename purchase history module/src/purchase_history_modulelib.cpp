@@ -63,6 +63,16 @@ void PurchaseHistory::clean_vector(std::vector<std::string> &clean_vector) {
   clean_vector.erase(std::unique(clean_vector.begin(), clean_vector.end()), clean_vector.end());
 }
 
+std::string PurchaseHistory::get_client_code_by_id(int client) {
+   return "still working on"
+}
+
+std::string PurchaseHistory::get_product_code_by_id(int product) {
+   return "still working on"
+}
+
+std::list<int> PurchaseHistory::get_items_from_client(std::vector<std::list<int>> client)
+
 void PurchaseHistory::terminal_acess() {
   do {
     int option_choosen = 0;
