@@ -1,9 +1,9 @@
 #include "../include/purchase_history_modulelib.hpp"
 
-PurchaseHistory::PurchaseHistory(int num, char **file) {
+PurchaseHistory::PurchaseHistory(int num, char **file, bool terminal) {
   quit_flag = false;
   PurchaseHistory::load_csv(num, file);
-  PurchaseHistory::terminal_acess();
+  if(terminal) PurchaseHistory::terminal_acess();
 }
 
 PurchaseHistory::~PurchaseHistory(){}
@@ -72,6 +72,14 @@ std::string PurchaseHistory::get_client_code_by_id(int client) {
 
 std::string PurchaseHistory::get_product_code_by_id(int product) {
   return map_id_to_product[product];
+}
+
+int PurchaseHistory::get_id_by_product_code(std::string product) {
+  return map_product_to_id[product];
+}
+
+int PurchaseHistory::get_id_by_client_code(std::string client) {
+  return map_client_to_id[client];
 }
 
 std::unordered_map<int,int> PurchaseHistory::get_items_from_client(int client_id) {
