@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -std=c++17 -Ipurchase_history_module/include
+CFLAGS = -g -Wall -Wextra -std=c++17 -Ipurchase_history_module/include
 
 PURCHASE_MODULE_PATH = purchase\ history\ module/src
 
