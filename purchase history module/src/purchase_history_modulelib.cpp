@@ -9,11 +9,11 @@ PurchaseHistory::PurchaseHistory(int num, char **file, bool terminal) {
 PurchaseHistory::~PurchaseHistory(){}
 
 void PurchaseHistory::load_csv(int num, char **file) {
-  for (int i = 0; i < num - 1; i++) {
-    std::ifstream arquivo(file[i + 1]);
+  for (int i = 1; i <= num; i++) {
+    std::ifstream arquivo(file[i]);
     std::string linha;
     if (!arquivo.is_open()) {
-      std::cerr << "Erro ao abrir arquivo: " << file[i + 1] << std::endl;
+      std::cerr << "Erro ao abrir arquivo: " << file[i] << std::endl;
       continue;
     }
     while (std::getline(arquivo, linha)) {
@@ -34,11 +34,11 @@ void PurchaseHistory::load_csv(int num, char **file) {
   PurchaseHistory::vectorToMap(all_products, map_product_to_id, map_id_to_product);
   purchase_history = std::vector<std::list<int>>(all_clients.size());
 
-  for (int i = 0; i < num - 1; i++) {
-    std::ifstream arquivo(file[i + 1]);
+  for (int i = 1; i <= num; i++) {
+    std::ifstream arquivo(file[i]);
     std::string linha;
     if (!arquivo.is_open()) {
-      std::cerr << "Erro ao abrir arquivo: " << file[i + 1] << std::endl;
+      std::cerr << "Erro ao abrir arquivo: " << file[i] << std::endl;
       continue;
     }
     while (std::getline(arquivo, linha)) {
