@@ -39,3 +39,16 @@ void SimilarityModule::show_matrix(std::vector<std::vector<float>> matrix) {
   }
   std::cout << std::endl;
 }
+
+std::vector<std::vector<float>> SimilarityModule::get_purchase_matrix(int qnt_products, std::vector<std::list<int>> purchase_vector) {
+  std::vector<std::vector<float>> matrix = std::vector<std::vector<float>>(purchase_vector.size(), std::vector<float>(qnt_products, 0.0));
+
+  for(int i = 0; i < purchase_vector.size(); i++) {
+    for(int product : purchase_vector[i]) {
+      matrix[i][product] = 1;
+    }
+  }
+  return matrix;
+}
+
+
