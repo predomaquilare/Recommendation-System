@@ -51,4 +51,7 @@ std::vector<std::vector<float>> SimilarityModule::get_purchase_matrix(int qnt_pr
   return matrix;
 }
 
-
+std::vector<std::vector<float>> SimilarityModule::intersection_matrix(std::vector<std::vector<float>> matrix) {
+  std::vector<std::vector<float>> return_matrix = SimilarityModule::matrix_multiplication(matrix, SimilarityModule::transposed_matrix(matrix));
+  return return_matrix;
+}
