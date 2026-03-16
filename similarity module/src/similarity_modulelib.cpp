@@ -55,3 +55,17 @@ std::vector<std::vector<float>> SimilarityModule::intersection_matrix(std::vecto
   std::vector<std::vector<float>> return_matrix = SimilarityModule::matrix_multiplication(matrix, SimilarityModule::transposed_matrix(matrix));
   return return_matrix;
 }
+
+std::vector<std::vector<float>> SimilarityModule::similarity_matrix(std::vector<std::vector<float>> intersection_matrix) {
+  std::vector<std::vector<float>> return_matrix = std::vector<std::vector<float>>(intersection_matrix.size(), std::vector<float>(intersection_matrix[0].size(), 0.0));
+    for(int i = 0; i < return_matrix.size(); i++) {
+      for(int j = 0; j < return_matrix[0].size(); j++) {
+        if(intersection_matrix[i][i] == 0) {
+          return_matrix[i][j] = 1;
+        } else {
+          return_matrix[i][j] = 1 - (intersection_matrix[i][j] / intersection_matrix[i][i]);
+        }
+      }
+    }
+  return return_matrix;
+}
