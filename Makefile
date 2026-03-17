@@ -11,7 +11,7 @@ SRC = $(PURCHASE_MODULE_PATH)/purchase_history_modulelib.cpp \
       # $(PURCHASE_MODULE_PATH)/purchase_history_module.cpp \
 
 
-TARGET = RecomendationSystem
+TARGET = RecommendationSystem
 
 all: $(TARGET)
 

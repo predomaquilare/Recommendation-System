@@ -12,6 +12,6 @@ int main (int argc, char **argv) {
   SimilarityModule::show_matrix(similarity.get_purchase_matrix());
   SimilarityModule::show_matrix(similarity.get_purchase_matrix_transposed());
   SimilarityModule::show_matrix(similarity.get_intersection_matrix());
-  SimilarityModule::show_matrix(similarity.get_similariry_matrix());
+  SimilarityModule::show_matrix(similarity.get_similarity_matrix());
   return 0;
 }

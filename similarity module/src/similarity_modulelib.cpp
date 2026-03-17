@@ -87,6 +87,6 @@ std::vector<std::vector<float>> SimilarityModule::get_intersection_matrix() {
   return intersection_matrix;
 }
 
-std::vector<std::vector<float>> SimilarityModule::get_similariry_matrix() {
+std::vector<std::vector<float>> SimilarityModule::get_similarity_matrix() {
   return similarity_matrix;
 }

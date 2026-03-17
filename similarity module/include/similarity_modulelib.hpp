@@ -13,7 +13,7 @@ class SimilarityModule {
     std::vector<std::vector<float>> get_purchase_matrix();
     std::vector<std::vector<float>> get_purchase_matrix_transposed();
     std::vector<std::vector<float>> get_intersection_matrix();
-    std::vector<std::vector<float>> get_similariry_matrix();
+    std::vector<std::vector<float>> get_similarity_matrix();
     
   private:
     std::vector<std::vector<float>> purchase_matrix;
