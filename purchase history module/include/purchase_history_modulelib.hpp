@@ -24,6 +24,8 @@ class PurchaseHistory {
     std::unordered_map<int,int> get_items_from_client(int client_id); 
 
   private:
+    std::vector<std::string> all_clients;
+    std::vector<std::string> all_products;
     std::vector<std::list<int>> purchase_history;
     std::vector<std::vector<std::string>> hash_vector;
     std::unordered_map<std::string, int> map_client_to_id;
