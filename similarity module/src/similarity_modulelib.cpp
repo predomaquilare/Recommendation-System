@@ -12,10 +12,10 @@ SimilarityModule::~SimilarityModule(){}
 std::vector<std::vector<float>> SimilarityModule::matrix_multiplication(std::vector<std::vector<float>> A, std::vector<std::vector<float>> B) {
   std::vector<std::vector<float>> C = std::vector<std::vector<float>>(A.size(), std::vector<float>(B[0].size(), 0.0));
 
-  for(int i = 0; i < A.size(); i++) {
-    for(int j = 0; j < B[0].size(); j++) {
+  for(unsigned int i = 0; i < A.size(); i++) {
+    for(unsigned int j = 0; j < B[0].size(); j++) {
       C[i][j] = 0;
-      for(int k = 0; k < B.size(); k++) {
+      for(unsigned int k = 0; k < B.size(); k++) {
         C[i][j] = C[i][j] + A[i][k] * B[k][j]; 
       }
     }
@@ -25,8 +25,8 @@ std::vector<std::vector<float>> SimilarityModule::matrix_multiplication(std::vec
 
 std::vector<std::vector<float>> SimilarityModule::set_transposed_matrix(std::vector<std::vector<float>> A) {
   std::vector<std::vector<float>> At =  std::vector<std::vector<float>>(A[0].size(), std::vector<float>(A.size(), 0.0));
-  for(int i = 0; i < A.size(); i++) {
-    for(int j = 0; j < A[0].size(); j++) {
+  for(unsigned int i = 0; i < A.size(); i++) {
+    for(unsigned int j = 0; j < A[0].size(); j++) {
       At[j][i] = A[i][j];
     }
   }
@@ -36,8 +36,8 @@ std::vector<std::vector<float>> SimilarityModule::set_transposed_matrix(std::vec
 
 void SimilarityModule::show_matrix(std::vector<std::vector<float>> matrix) {
   std::cout << std::endl;
-  for(int i = 0; i < matrix.size(); i++) {
-    for(int j = 0; j < matrix[0].size(); j++) {
+  for(unsigned int i = 0; i < matrix.size(); i++) {
+    for(unsigned int j = 0; j < matrix[0].size(); j++) {
       std::cout << matrix[i][j] << " "; 
     }
     std::cout << std::endl;
@@ -48,8 +48,8 @@ void SimilarityModule::show_matrix(std::vector<std::vector<float>> matrix) {
 std::vector<std::vector<float>> SimilarityModule::set_purchase_matrix(int qnt_products, std::vector<std::list<int>> purchase_vector) {
   std::vector<std::vector<float>> matrix = std::vector<std::vector<float>>(purchase_vector.size(), std::vector<float>(qnt_products, 0.0));
 
-  for(int i = 0; i < purchase_vector.size(); i++) {
-    for(int product : purchase_vector[i]) {
+  for(unsigned int i = 0; i < purchase_vector.size(); i++) {
+    for(unsigned int product : purchase_vector[i]) {
       matrix[i][product] = 1;
     }
   }
@@ -63,8 +63,8 @@ std::vector<std::vector<float>> SimilarityModule::set_intersection_matrix(std::v
 
 std::vector<std::vector<float>> SimilarityModule::set_similarity_matrix(std::vector<std::vector<float>> intersection_matrix) {
   std::vector<std::vector<float>> return_matrix = std::vector<std::vector<float>>(intersection_matrix.size(), std::vector<float>(intersection_matrix[0].size(), 0.0));
-  for(int i = 0; i < return_matrix.size(); i++) {
-    for(int j = 0; j < return_matrix[0].size(); j++) {
+  for(unsigned int i = 0; i < return_matrix.size(); i++) {
+    for(unsigned int j = 0; j < return_matrix[0].size(); j++) {
       if(intersection_matrix[i][i] == 0) {
         return_matrix[i][j] = 1;
       } else {
