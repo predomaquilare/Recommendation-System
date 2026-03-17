@@ -30,20 +30,20 @@ void PurchaseHistory::load_csv(int num, char **file) {
         map_client_to_id[cliente] = client_count;
         map_id_to_client[client_count] = cliente;
         purchase_history.push_back(std::list<int>());
+        all_clients.push_back(cliente);
         client_count++;
       }
-      if (map_product_to_id.find(nome) == map_product_to_id.end()) {
-        map_product_to_id[nome] = product_count;
-        map_id_to_product[product_count] = nome;
+      if (map_product_to_id.find(produto) == map_product_to_id.end()) {
+        map_product_to_id[produto] = product_count;
+        map_id_to_product[product_count] = produto;
+        all_products.push_back(produto);
         product_count++;
       }
       int client_id = map_client_to_id[cliente];
-      int product_id = map_product_to_id[nome];
+      int product_id = map_product_to_id[produto];
       purchase_history[client_id].push_back(product_id);
     }
   }
-  std::cout << "Quantidade de clientes únicos: " << client_count << std::endl;
-  std::cout << "Quantidade de produtos únicos: " << product_count << std::endl;
 }
 
 std::string PurchaseHistory::get_client_code_by_id(int client) {
