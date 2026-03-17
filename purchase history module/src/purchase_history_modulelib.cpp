@@ -94,6 +94,11 @@ std::vector<std::list<int>> PurchaseHistory::get_purchase_history() {
   return purchase_history;
 }
 
+int PurchaseHistory::get_products_size() {
+  return ((int)all_products.size());
+
+}
+
 void PurchaseHistory::terminal_access() {
   int option_choosen;
   int id;

@@ -1,7 +1,7 @@
 #include "../include/similarity_modulelib.hpp"
 
 SimilarityModule::SimilarityModule(int qnt_products, std::vector<std::list<int>> purchase_vector){
-  purchase_matrix = SimilarityModule::set_purchase_matrix(qnt_products+1, purchase_vector);
+  purchase_matrix = SimilarityModule::set_purchase_matrix(qnt_products, purchase_vector);
   purchase_matrix_transposed = SimilarityModule::set_transposed_matrix(purchase_matrix);
   intersection_matrix = SimilarityModule::set_intersection_matrix(purchase_matrix);
   similarity_matrix = SimilarityModule::set_similarity_matrix(intersection_matrix);
