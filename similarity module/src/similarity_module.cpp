@@ -1,12 +1,11 @@
 #include "../include/similarity_modulelib.hpp"
 
 int main() {
-  std::vector<std::vector<float>> matriz1 = {{2,3,4},{1,2,3},{8,6,5}};
-  std::vector<std::vector<float>> matriz2, matriz3;
-  SimilarityModule::show_matrix(matriz1);
-  matriz2 = SimilarityModule::transposed_matrix(matriz1);
-  SimilarityModule::show_matrix(matriz2);
-  matriz3 = SimilarityModule::matrix_multiplication(matriz1, matriz2); 
-  SimilarityModule::show_matrix(matriz3);
+  std::vector<std::list<int>> matriz1 = {{2,3,4},{1,2,3},{8,6,5}};
+  SimilarityModule similarity(8, matriz1);
+  SimilarityModule::show_matrix(similarity.get_purchase_matrix());
+  SimilarityModule::show_matrix(similarity.get_purchase_matrix_transposed());
+  SimilarityModule::show_matrix(similarity.get_intersection_matrix());
+  SimilarityModule::show_matrix(similarity.get_similariry_matrix());
   return 0;
 }
