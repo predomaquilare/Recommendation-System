@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debugar com Makefile",
+      "type": "cppdbg",
+      "request": "launch",
+      "program": "${workspaceFolder}/PurchaseHistoryModule",
+      "args": [
+        "sales_data/dados_venda_cluster_20.csv",
+        "sales_data/dados_venda_cluster_65.csv",
+        "sales_data/dados_venda_cluster_84.csv",
+        "sales_data/dados_venda_teste.csv"
+      ],
+      "stopAtEntry": false,
+      "cwd": "${workspaceFolder}",
+      "environment": [],
+      "externalConsole": false,
+      "MIMode": "gdb",
+      "miDebuggerPath": "/usr/bin/gdb",
+      "setupCommands": [
+        {
+          "description": "Enable pretty-printing for gdb",
+          "text": "-enable-pretty-printing",
+          "ignoreFailures": true
+        },
+        {
+          "text": "set pagination off",
+          "ignoreFailures": true
+        }
+      ],
+      "avoidWindowsConsoleRedirection": true,
+      "logging": { "engineLogging": false } 
+    }
+  ]
+}

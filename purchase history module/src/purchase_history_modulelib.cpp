@@ -9,11 +9,13 @@ PurchaseHistory::PurchaseHistory(int num, char **file, bool terminal) {
 PurchaseHistory::~PurchaseHistory(){}
 
 void PurchaseHistory::load_csv(int num, char **file) {
-  for (int i = 0; i < num - 1; i++) {
-    std::ifstream arquivo(file[i + 1]);
+  unsigned long int client_count = 0, product_count = 0;
+
+  for (int i = 1; i <= num; i++) {
+    std::ifstream arquivo(file[i]);
     std::string linha;
     if (!arquivo.is_open()) {
-      std::cerr << "Erro ao abrir arquivo: " << file[i + 1] << std::endl;
+      std::cerr << "Erro ao abrir arquivo: " << file[i] << std::endl;
       continue;
     }
     while (std::getline(arquivo, linha)) {
@@ -24,46 +26,24 @@ void PurchaseHistory::load_csv(int num, char **file) {
       std::getline(ss, cliente, ',');
       std::getline(ss, produto, ',');
       std::getline(ss, nome);
-      all_clients.push_back(cliente);
-      all_products.push_back(nome);
+      if (map_client_to_id.find(cliente) == map_client_to_id.end()){
+        map_client_to_id[cliente] = client_count;
+        map_id_to_client[client_count] = cliente;
+        purchase_history.push_back(std::list<int>());
+        all_clients.push_back(cliente);
+        client_count++;
+      }
+      if (map_product_to_id.find(produto) == map_product_to_id.end()) {
+        map_product_to_id[produto] = product_count;
+        map_id_to_product[product_count] = produto;
+        all_products.push_back(produto);
+        product_count++;
+      }
+      int client_id = map_client_to_id[cliente];
+      int product_id = map_product_to_id[produto];
+      purchase_history[client_id].push_back(product_id);
     }
   }
-  PurchaseHistory::clean_vector(all_clients);
-  PurchaseHistory::clean_vector(all_products);
-  PurchaseHistory::vectorToMap(all_clients, map_client_to_id, map_id_to_client);
-  PurchaseHistory::vectorToMap(all_products, map_product_to_id, map_id_to_product);
-  purchase_history = std::vector<std::list<int>>(all_clients.size());
-
-  for (int i = 0; i < num - 1; i++) {
-    std::ifstream arquivo(file[i + 1]);
-    std::string linha;
-    if (!arquivo.is_open()) {
-      std::cerr << "Erro ao abrir arquivo: " << file[i + 1] << std::endl;
-      continue;
-    }
-    while (std::getline(arquivo, linha)) {
-      std::stringstream ss(linha);
-      std::string data, cliente, produto, nome;
-      std::getline(ss, data, ',');
-      if(data == "DATA_COMPRA") continue;
-      std::getline(ss, cliente, ',');
-      std::getline(ss, produto, ',');
-      std::getline(ss, nome);
-      purchase_history[map_client_to_id[cliente]].push_back(map_product_to_id[nome]);
-    }
-  }
-}
-
-void PurchaseHistory::vectorToMap(std::vector<std::string> &vetor, std::unordered_map<std::string, int> &mapping_to_id, std::unordered_map<int, std::string> &id_to_mapping) {
-  for(size_t i = 0; i < vetor.size(); i++) {
-    mapping_to_id[vetor[i]] = i;
-    id_to_mapping[i] = vetor[i];
-  }
-}
-
-void PurchaseHistory::clean_vector(std::vector<std::string> &clean_vector) {
-  std::sort(clean_vector.begin(), clean_vector.end());
-  clean_vector.erase(std::unique(clean_vector.begin(), clean_vector.end()), clean_vector.end());
 }
 
 std::string PurchaseHistory::get_client_code_by_id(int client) {

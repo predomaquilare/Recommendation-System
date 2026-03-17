@@ -9,7 +9,7 @@ int main (int argc, char **argv) {
     std::cerr << "You need to pass at least 1 additional arg to use this program" << std::endl;
     return 1;
   }
-  PurchaseHistory module(argc, argv, false);
+  PurchaseHistory module((argc-1), argv, false);
   std::vector<std::string> clients = {"99EJYS01","9O09ND01","67701201"};
   std::cout << std::endl;
   

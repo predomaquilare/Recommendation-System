@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -Wall -Wextra -std=c++17 
+CFLAGS = -g -Wall -Wextra -std=c++17
 
 PURCHASE_MODULE_PATH = purchase\ history\ module/src
 SIMILARITY_MODULE_PATH = similarity\ module/src
@@ -11,7 +11,7 @@ SRC = $(PURCHASE_MODULE_PATH)/purchase_history_modulelib.cpp \
       # $(PURCHASE_MODULE_PATH)/purchase_history_module.cpp \
 
 
-TARGET = RecomendationSystem
+TARGET = RecommendationSystem
 
 all: $(TARGET)
 
