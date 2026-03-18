@@ -106,21 +106,20 @@ void PurchaseHistory::terminal_access() {
                 std::string original_code;
                 auto all_purchase_history = get_client_purchase_history();
                 for (int i = 0; i < num_of_clients; i++){
-                  std::cout << "Type the client ID " << i + 1 << ": ";
+                  std::cout << "Type the client code: ";
                   std::cin >> original_code;
                   ids.push_back(original_code);
                 }
                 for (std::string current_code : ids) {
                   int client_id = get_client_id_by_client_code(current_code);
                   
-                  std::cout << "Client " << current_code << " purchased: " << std::endl;
+                  std::cout << "Client " << current_code << " purchased: \n" << std::endl;
                   std::list<int> client_history = all_purchase_history[client_id];
                   for (int product_id : client_history){
                     std::string product_name = all_products_names[product_id];
                     std::cout << product_name << "\n";
                   }
                   std::cout << std::endl;
-
                 }
                 sleep(3);
               }
