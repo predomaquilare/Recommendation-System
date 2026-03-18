@@ -1,68 +1,69 @@
 #include "../include/purchase_history_modulelib.hpp"
 
-PurchaseHistory::PurchaseHistory(int num, char **file, bool terminal) {
+PurchaseHistory::PurchaseHistory(int num_of_files, char **files, bool terminal) {
   quit_flag = false;
-  PurchaseHistory::load_csv(num, file);
+  PurchaseHistory::load_csv(num_of_files, files);
   if(terminal) PurchaseHistory::terminal_access();
 }
 
 PurchaseHistory::~PurchaseHistory(){}
 
-void PurchaseHistory::load_csv(int num, char **file) {
-  unsigned long int client_count = 0, product_count = 0;
+void PurchaseHistory::load_csv(int num_of_files, char **files) {
+  unsigned long int client_id = 0, product_id = 0;
 
-  for (int i = 1; i <= num; i++) {
-    std::ifstream arquivo(file[i]);
-    std::string linha;
-    if (!arquivo.is_open()) {
-      std::cerr << "Erro ao abrir arquivo: " << file[i] << std::endl;
+  for (int current_file = 1; current_file <= num_of_files; current_file++) {
+    std::ifstream file(files[current_file]);
+    std::string line;
+    if (!file.is_open()) {
+      std::cerr << "Erro ao abrir arquivo: " << files[current_file] << std::endl;
       continue;
     }
-    while (std::getline(arquivo, linha)) {
-      std::stringstream ss(linha);
-      std::string data, cliente, produto, nome;
-      std::getline(ss, data, ',');
-      if(data == "DATA_COMPRA") continue;
-      std::getline(ss, cliente, ',');
-      std::getline(ss, produto, ',');
-      std::getline(ss, nome);
-      if (map_client_to_id.find(cliente) == map_client_to_id.end()){
-        map_client_to_id[cliente] = client_count;
-        map_id_to_client[client_count] = cliente;
+    while (std::getline(file, line)) {
+      std::stringstream current_line(line);
+      std::string date, client_code, product_code, product_name;
+      std::getline(current_line, date, ',');
+      if(date == "DATA_COMPRA") continue;
+      std::getline(current_line, client_code, ',');
+      std::getline(current_line, product_code, ',');
+      std::getline(current_line, product_name);
+      if (map_client_code_to_id.find(client_code) == map_client_code_to_id.end()){
+        map_client_code_to_id[client_code] = client_id;
+        map_client_id_to_client_code[client_id] = client_code;
         purchase_history.push_back(std::list<int>());
-        all_clients.push_back(cliente);
-        client_count++;
+        all_clients_codes.push_back(client_code);
+        client_id++;
       }
-      if (map_product_to_id.find(produto) == map_product_to_id.end()) {
-        map_product_to_id[produto] = product_count;
-        map_id_to_product[product_count] = produto;
-        all_products.push_back(produto);
-        product_count++;
+      if (map_product_code_to_id.find(product_code) == map_product_code_to_id.end()) {
+        map_product_code_to_id[product_code] = product_id;
+        map_product_id_to_product[product_id] = product_code;
+        all_products_names.push_back(product_name);
+        all_products_codes.push_back(product_code);
+        product_id++;
       }
-      int client_id = map_client_to_id[cliente];
-      int product_id = map_product_to_id[produto];
-      purchase_history[client_id].push_back(product_id);
+      int client_id_key = map_client_code_to_id[client_code];
+      int product_code_key = map_product_code_to_id[product_code];
+      purchase_history[client_id_key].push_back(product_code_key);
     }
   }
 }
 
-std::string PurchaseHistory::get_client_code_by_id(int client) {
-  return map_id_to_client[client];
+std::string PurchaseHistory::get_client_code_by_id(int client_id) {
+  return map_client_id_to_client_code[client_id];
 }
 
-std::string PurchaseHistory::get_product_code_by_id(int product) {
-  return map_id_to_product[product];
+std::string PurchaseHistory::get_product_code_by_id(int product_id) {
+  return map_product_id_to_product[product_id];
 }
 
-int PurchaseHistory::get_id_by_product_code(std::string product) {
-  return map_product_to_id[product];
+int PurchaseHistory::get_product_id_by_product_code(std::string product) {
+  return map_product_code_to_id[product];
 }
 
-int PurchaseHistory::get_id_by_client_code(std::string client) {
-  return map_client_to_id[client];
+int PurchaseHistory::get_client_id_by_client_code(std::string client) {
+  return map_client_code_to_id[client];
 }
 
-std::unordered_map<int,int> PurchaseHistory::get_items_from_client(int client_id) {
+std::unordered_map<int,int> PurchaseHistory::get_purchased_items_from_client(int client_id) {
   std::unordered_map<int,int> product_count;
   for(int product : purchase_history[client_id]) {
     product_count[product]++;
@@ -70,13 +71,12 @@ std::unordered_map<int,int> PurchaseHistory::get_items_from_client(int client_id
   return product_count;
 }
 
-std::vector<std::list<int>> PurchaseHistory::get_purchase_history() {
+std::vector<std::list<int>> PurchaseHistory::get_client_purchase_history() {
   return purchase_history;
 }
 
 int PurchaseHistory::get_products_size() {
-  return ((int)all_products.size());
-
+  return ((int)all_products_codes.size());
 }
 
 void PurchaseHistory::terminal_access() {
@@ -98,7 +98,7 @@ void PurchaseHistory::terminal_access() {
       case 1: {
                 std::cout << "Type the client's id: ";
                 std::cin >> id;
-                auto items = PurchaseHistory::get_items_from_client(id);
+                auto items = PurchaseHistory::get_purchased_items_from_client(id);
                 for(auto &p : items) std::cout << get_product_code_by_id(p.first) << " -> " << p.second << std::endl;
                 sleep(3);
               }
@@ -124,6 +124,10 @@ void PurchaseHistory::terminal_access() {
 
       case 4:
               quit_flag = true;
+              break;
+      default:{
+                std::cout << "Invalid Option!" << std::endl;
+              }
               break;
     }
 

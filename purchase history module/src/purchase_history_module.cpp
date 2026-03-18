@@ -14,7 +14,7 @@ int main (int argc, char **argv) {
   std::cout << std::endl;
   
   for(size_t i = 0; i < clients.size(); i++) {
-    auto items = module.get_items_from_client(module.get_id_by_client_code(clients[i]));
+    auto items = module.get_purchased_items_from_client(module.get_client_id_by_client_code(clients[i]));
     std::cout << "Client: " << clients[i] << std::endl;
     for(auto &p : items) std::cout << module.get_product_code_by_id(p.first) << " -> " << p.second << std::endl;
     std::cout << std::endl;

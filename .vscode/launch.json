@@ -5,7 +5,7 @@
       "name": "Debugar com Makefile",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/PurchaseHistoryModule",
+      "program": "${workspaceFolder}/RecommendationSystem",
       "args": [
         "sales_data/dados_venda_cluster_20.csv",
         "sales_data/dados_venda_cluster_65.csv",

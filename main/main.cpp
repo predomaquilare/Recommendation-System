@@ -7,8 +7,8 @@ int main (int argc, char **argv) {
     std::cerr << "You need to pass at least 1 additional arg to use this program" << std::endl;
     return 1;
   }
-  PurchaseHistory module((argc - 1), argv, false);
-  SimilarityModule similarity(module.get_products_size(), module.get_purchase_history());
+  PurchaseHistory module((argc - 1), argv, true);
+  SimilarityModule similarity(module.get_products_size(), module.get_client_purchase_history());
   SimilarityModule::show_matrix(similarity.get_purchase_matrix());
   SimilarityModule::show_matrix(similarity.get_purchase_matrix_transposed());
   SimilarityModule::show_matrix(similarity.get_intersection_matrix());
