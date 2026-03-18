@@ -10,7 +10,7 @@ int main(int argc, char **argv) {
   std::vector<std::string> clients = {"9O09ND01", "59292401", "99CWNZ01"};
 
   PurchaseHistory module((argc - 1), argv, false);
-  SimilarityModule similarity(module.get_products_size(), module.get_client_purchase_history());
+  SimilarityModule similarity(module.get_products_size(), module.get_client_purchase_history(), 1);
 
   // SimilarityModule::show_matrix(similarity.get_purchase_matrix());
   // SimilarityModule::show_matrix(similarity.get_purchase_matrix_transposed());

@@ -1,10 +1,12 @@
 #include "../include/similarity_modulelib.hpp"
 
-SimilarityModule::SimilarityModule(int qnt_products, std::vector<std::list<int>> purchase_vector){
+SimilarityModule::SimilarityModule(int qnt_products, std::vector<std::list<int>> purchase_vector, int multithread_option){
+  multithread = multithread_option;
   purchase_matrix = SimilarityModule::set_purchase_matrix(qnt_products, purchase_vector);
   purchase_matrix_transposed = SimilarityModule::set_transposed_matrix(purchase_matrix);
   intersection_matrix = SimilarityModule::set_intersection_matrix(purchase_matrix);
   similarity_matrix = SimilarityModule::set_similarity_matrix(intersection_matrix);
+  
 }
 
 SimilarityModule::~SimilarityModule(){}
@@ -20,6 +22,39 @@ std::vector<std::vector<float>> SimilarityModule::matrix_multiplication(std::vec
       }
     }
   }
+  return C;
+}
+
+std::vector<std::vector<float>> SimilarityModule::matrix_multiplication_threads(std::vector<std::vector<float>> A, std::vector<std::vector<float>> B) {
+  std::vector<std::vector<float>> C(A.size(), std::vector<float>(B[0].size(), 0.0));
+  std::vector<std::thread> threads;
+
+  unsigned int num_threads = std::thread::hardware_concurrency();
+  if (num_threads > A.size()) num_threads = A.size();
+  unsigned int rows_per_thread = A.size() / num_threads;
+  unsigned int remainder = A.size() % num_threads;
+  unsigned int start = 0;
+
+  for (unsigned int t = 0; t < num_threads; t++) {
+    unsigned int extra = (t < remainder) ? 1 : 0;
+    unsigned int end = start + rows_per_thread + extra;
+    threads.emplace_back([&, start, end]() {
+        for (unsigned int i = start; i < end; i++) {
+          for (unsigned int j = 0; j < B[0].size(); j++) {
+            C[i][j] = 0;
+            for (unsigned int k = 0; k < B.size(); k++) {
+              C[i][j] += A[i][k] * B[k][j];
+            }
+          }
+        }
+    });
+    start = end;
+  }
+
+  for (unsigned int i = 0; i < threads.size(); i++) {
+    threads[i].join();
+  }
+
   return C;
 }
 
@@ -57,7 +92,14 @@ std::vector<std::vector<float>> SimilarityModule::set_purchase_matrix(int qnt_pr
 }
 
 std::vector<std::vector<float>> SimilarityModule::set_intersection_matrix(std::vector<std::vector<float>> matrix) {
-  std::vector<std::vector<float>> return_matrix = SimilarityModule::matrix_multiplication(matrix, SimilarityModule::set_transposed_matrix(matrix));
+  std::vector<std::vector<float>> return_matrix;
+  if(multithread == 1) {
+    return_matrix = SimilarityModule::matrix_multiplication_threads(matrix, SimilarityModule::set_transposed_matrix(matrix));
+  }
+  else if(multithread == 0) {
+    return_matrix = SimilarityModule::matrix_multiplication(matrix, SimilarityModule::set_transposed_matrix(matrix));
+  }
+
   return return_matrix;
 }
 
