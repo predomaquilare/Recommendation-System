@@ -100,7 +100,7 @@ void PurchaseHistory::terminal_access() {
                 do{
                   std::cout << "How many clients do you want to see the items?: ";
                   std::cin >> num_of_clients;
-                  if (num_of_clients < 3) std::cout << "Chose at least 3 clients" << std::endl;
+                  if (num_of_clients < 3) std::cout << "Choose at least 3 clients" << std::endl;
                 } while(num_of_clients < 3);
                 std::vector <std::string> ids;
                 std::string original_code;
