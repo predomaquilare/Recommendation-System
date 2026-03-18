@@ -75,6 +75,22 @@ std::vector<std::vector<float>> SimilarityModule::set_similarity_matrix(std::vec
   return return_matrix;
 }
 
+std::vector<int> SimilarityModule::get_most_similar_client(int client_code) {
+  float min_similarity = 1.0;
+  std::vector<int> same_similarity_clients;
+  for(int i = 0; i < similarity_matrix.size(); i++) {
+    if(i == client_code) continue;
+    if(similarity_matrix[client_code][i] < min_similarity) {
+      min_similarity = similarity_matrix[client_code][i];
+    }
+  }
+  for(int i = 0; i < similarity_matrix.size(); i++) {
+    if(similarity_matrix[client_code][i] == min_similarity) 
+      same_similarity_clients.push_back(i);
+  }
+  return same_similarity_clients;
+}
+
 std::vector<std::vector<float>> SimilarityModule::get_purchase_matrix() {
   return purchase_matrix;
 }

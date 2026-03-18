@@ -14,6 +14,7 @@ class SimilarityModule {
     std::vector<std::vector<float>> get_purchase_matrix_transposed();
     std::vector<std::vector<float>> get_intersection_matrix();
     std::vector<std::vector<float>> get_similarity_matrix();
+    std::vector<int> get_most_similar_client(int client_code);
     
   private:
     std::vector<std::vector<float>> purchase_matrix;
