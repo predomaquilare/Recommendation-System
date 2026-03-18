@@ -82,24 +82,46 @@ int PurchaseHistory::get_products_size() {
 void PurchaseHistory::terminal_access() {
   int option_choosen;
   int id;
+  int num_of_clients;
   do {
     option_choosen = 0;
     id = 0;
     std::cout << "\033[2J\033[H"; // limpa terminal
-    std::cout << "<=== PurchaseHistoryModule Menu ===>" << std::endl;
-    std::cout << "<===      Choose an option      ===>" << std::endl;
-    std::cout << "<=   1 -> Get client items        =>" << std::endl;
-    std::cout << "<=   2 -> Get client code by id   =>" << std::endl;
-    std::cout << "<=   3 -> Get product code by id  =>" << std::endl;
-    std::cout << "<=   4 -> Quit                    =>" << std::endl;
+    std::cout << "<=== PurchaseHistoryModule Menu           ===>" << std::endl;
+    std::cout << "<===      Choose an option                ===>" << std::endl;
+    std::cout << "<=   1 -> Get clients purchased items       =>" << std::endl;
+    std::cout << "<=   2 -> Get client code by id             =>" << std::endl;
+    std::cout << "<=   3 -> Get product code by id            =>" << std::endl;
+    std::cout << "<=   4 -> Quit                              =>" << std::endl;
     std::cin >> option_choosen;
 
     switch(option_choosen) {
       case 1: {
-                std::cout << "Type the client's id: ";
-                std::cin >> id;
-                auto items = PurchaseHistory::get_purchased_items_from_client(id);
-                for(auto &p : items) std::cout << get_product_code_by_id(p.first) << " -> " << p.second << std::endl;
+                do{
+                  std::cout << "How many clients do you want to see the items?: ";
+                  std::cin >> num_of_clients;
+                  if (num_of_clients < 3) std::cout << "Chose at least 3 clients" << std::endl;
+                } while(num_of_clients < 3);
+                std::vector <std::string> ids;
+                std::string original_code;
+                auto all_purchase_history = get_client_purchase_history();
+                for (int i = 0; i < num_of_clients; i++){
+                  std::cout << "Type the client ID " << i + 1 << ": ";
+                  std::cin >> original_code;
+                  ids.push_back(original_code);
+                }
+                for (std::string current_code : ids) {
+                  int client_id = get_client_id_by_client_code(current_code);
+                  
+                  std::cout << "Client " << current_code << " purchased: " << std::endl;
+                  std::list<int> client_history = all_purchase_history[client_id];
+                  for (int product_id : client_history){
+                    std::string product_name = all_products_names[product_id];
+                    std::cout << product_name << "\n";
+                  }
+                  std::cout << std::endl;
+
+                }
                 sleep(3);
               }
               break;
