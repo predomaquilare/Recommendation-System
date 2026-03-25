@@ -73,7 +73,7 @@ void SimilarityModule::show_matrix(std::vector<std::vector<float>> matrix) {
   std::cout << std::endl;
   for(unsigned int i = 0; i < matrix.size(); i++) {
     for(unsigned int j = 0; j < matrix[0].size(); j++) {
-      std::cout << matrix[i][j] << " "; 
+      std::cout << matrix[i][j] << " ";
     }
     std::cout << std::endl;
   }
@@ -127,7 +127,7 @@ std::vector<int> SimilarityModule::get_most_similar_client(unsigned int client_c
     }
   }
   for(unsigned int i = 0; i < similarity_matrix.size(); i++) {
-    if(similarity_matrix[client_code][i] == min_similarity) 
+    if(similarity_matrix[client_code][i] == min_similarity)
       same_similarity_clients.push_back(i);
   }
   return same_similarity_clients;

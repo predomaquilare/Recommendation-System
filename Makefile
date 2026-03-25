@@ -7,9 +7,6 @@ SIMILARITY_MODULE_PATH = similarity\ module/src
 SRC = $(PURCHASE_MODULE_PATH)/purchase_history_modulelib.cpp \
 			$(SIMILARITY_MODULE_PATH)/similarity_modulelib.cpp \
 			main/main.cpp
-			# $(SIMILARITY_MODULE_PATH)/similarity_module.cpp 
-      # $(PURCHASE_MODULE_PATH)/purchase_history_module.cpp \
-
 
 TARGET = RecommendationSystem
 
