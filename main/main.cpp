@@ -9,39 +9,38 @@ int main(int argc, char **argv) {
     return 1;
   }
 
-  // int k = 5;
-  // std::array<std::string, 3> clients;
-  // std::cout << "Type the first user ID to search: ";
-  // std::cin >> clients[0];
-  // std::cout << "Type the second user ID to search: ";
-  // std::cin >> clients[1];
-  // std::cout << "Type the third user ID to search: ";
-  // std::cin >> clients[2];
+  std::vector<RecommendedProduct> products;
+  std::vector<std::string> clients = std::vector<std::string>(3, "");
+  int k;
+
+  std::cout << "Digite o codigo para o cliente 1: ";
+  std::cin >> clients[0];
+  std::cout << std::endl;
+
+  std::cout << "Digite o codigo para o cliente 2: ";
+  std::cin >> clients[1];
+  std::cout << std::endl;
+
+  std::cout << "Digite o codigo para o cliente 3: ";
+  std::cin >> clients[2];
+  std::cout << std::endl;
+
+  std::cout << "Digite o numero de produtos recomendados: ";
+  std::cin >> k;
+  std::cout << std::endl;
 
   PurchaseHistory module((argc - 1), argv, false);
   SimilarityModule similarity(module.get_products_size(), module.get_client_purchase_history(), 1);
   RecommendationModule recommendation(similarity);
 
+  for(int i = 0; i < clients.size(); i++) {
+    std::cout << "Cliente " << i+1 << std::endl;
+    products = recommendation.get_recommendations(module.get_client_id_by_client_code(clients[i]), k);
+    for(int j = 0; j < products.size(); j++) {
+      std::cout << module.get_product_name_by_id(products[j].product_id) << " | Ranking Value: "<<  products[j].ranking_score << std::endl;
+    }
+    std::cout << std::endl;
+  }
 
-  SimilarityModule::show_matrix(recommendation.get_ranking_vector());
-  // for (const std::string& code : clients) {
-  //   int c_id = module.get_client_id_by_client_code(code);
-
-  //   std::vector<RecommendedProduct> recommendations = 
-  //       RecommendationModule::get_recommendations(c_id, k, similarity, module);
-
-  //   std::cout << "Cliente: " << code << std::endl;
-  //   std::cout << "Produtos recomendados:" << std::endl;
-
-  //   if (recommendations.empty()) {
-  //     std::cout << "  Nenhuma recomendação encontrada." << std::endl;
-  //   } else {
-  //     for (const auto& rec : recommendations) {
-  //       std::string p_name = module.get_product_name_by_id(rec.product_id); 
-  //       std::cout << "  - " << p_name << " (Score: " << rec.ranking_score << ")" << std::endl;
-  //     }
-  //   }
-  //   std::cout << "-----------------------------------" << std::endl;
-  // }
   return 0;
 }
