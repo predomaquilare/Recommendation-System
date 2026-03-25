@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS = -g -Wall -Wextra -std=c++17
+CFLAGS = -g -O3 -march=native -fopenmp -fopt-info-vec-optimized -Wall -Wextra -std=c++17
 
 PURCHASE_MODULE_PATH = purchase\ history\ module/src
 SIMILARITY_MODULE_PATH = similarity\ module/src
