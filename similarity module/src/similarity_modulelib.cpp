@@ -117,9 +117,9 @@ std::vector<std::vector<float>> SimilarityModule::set_similarity_matrix(std::vec
   return return_matrix;
 }
 
-std::vector<int> SimilarityModule::get_most_similar_client(unsigned int client_code) {
+std::list<int> SimilarityModule::get_most_similar_client(unsigned int client_code) {
   float min_similarity = 1.0;
-  std::vector<int> same_similarity_clients;
+  std::list<int> same_similarity_clients;
   for(unsigned int i = 0; i < similarity_matrix.size(); i++) {
     if(i == client_code) continue;
     if(similarity_matrix[client_code][i] < min_similarity) {
