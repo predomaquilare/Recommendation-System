@@ -18,7 +18,7 @@ class RecommendationModule {
     std::vector<std::vector<float>> get_ranking_vector();
 
   private:
-    // static bool compareRanking(const RecommendedProduct& a, const RecommendedProduct& b);
+    static bool compare_ranking(const RecommendedProduct& a, const RecommendedProduct& b);
     SimilarityModule& similarity_object;
 
     std::vector<std::vector<RecommendedProduct>> ranking_vector;
@@ -26,6 +26,6 @@ class RecommendationModule {
     std::vector<std::vector<float>> similarity_matrix;
 
     std::vector<std::vector<RecommendedProduct>> create_ranking_vector();
-    std::vector<std::vector<RecommendedProduct>> sort_ranking_vector();
+    void sort_ranking_vector();
 
 };
