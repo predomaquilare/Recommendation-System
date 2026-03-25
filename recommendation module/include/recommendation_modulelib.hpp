@@ -3,7 +3,6 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "../../purchase history module/include/purchase_history_modulelib.hpp"
 #include "../../similarity module/include/similarity_modulelib.hpp"
 
 struct RecommendedProduct {
@@ -13,12 +12,20 @@ struct RecommendedProduct {
 
 class RecommendationModule {
   public:
-    static std::vector<RecommendedProduct> get_recommendations(
-      int client_id, 
-      int k, 
-      SimilarityModule& similarity, 
-      PurchaseHistory& history
-    );
+    RecommendationModule(SimilarityModule& similarity);
+    ~RecommendationModule();
+    std::vector<RecommendedProduct> get_recommendations(int client_id, int k);
+    std::vector<std::vector<float>> get_ranking_vector();
+
   private:
-    static bool compareRanking(const RecommendedProduct& a, const RecommendedProduct& b);
+    // static bool compareRanking(const RecommendedProduct& a, const RecommendedProduct& b);
+    SimilarityModule& similarity_object;
+
+    std::vector<std::vector<RecommendedProduct>> ranking_vector;
+    std::vector<std::vector<float>> purchase_matrix;
+    std::vector<std::vector<float>> similarity_matrix;
+
+    std::vector<std::vector<RecommendedProduct>> create_ranking_vector();
+    std::vector<std::vector<RecommendedProduct>> sort_ranking_vector();
+
 };
