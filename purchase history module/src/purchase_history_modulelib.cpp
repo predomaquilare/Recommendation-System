@@ -1,3 +1,4 @@
+#pragma once
 #include "../include/purchase_history_modulelib.hpp"
 
 PurchaseHistory::PurchaseHistory(int num_of_files, char **files, bool terminal) {
@@ -45,6 +46,8 @@ void PurchaseHistory::load_csv(int num_of_files, char **files) {
       purchase_history[client_id_key].push_back(product_code_key);
     }
   }
+  std::cout << "Quantidade de clientes únicos: " << client_id << std::endl;
+  std::cout << "Quantidade de produtos únicos: " << product_id << std::endl;
 }
 
 std::string PurchaseHistory::get_client_code_by_id(int client_id) {
@@ -73,6 +76,12 @@ std::unordered_map<int,int> PurchaseHistory::get_purchased_items_from_client(int
 
 std::vector<std::list<int>> PurchaseHistory::get_client_purchase_history() {
   return purchase_history;
+}
+
+std::string PurchaseHistory::get_product_name_by_id(int product_id) const{
+  if (product_id >= 0 && product_id < (int) all_products_names.size())
+    return all_products_names[product_id];
+  return "";
 }
 
 int PurchaseHistory::get_products_size() {
