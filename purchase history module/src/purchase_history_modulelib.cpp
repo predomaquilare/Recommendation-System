@@ -46,8 +46,8 @@ void PurchaseHistory::load_csv(int num_of_files, char **files) {
       purchase_history[client_id_key].push_back(product_code_key);
     }
   }
-  std::cout << "Quantidade de clientes únicos: " << client_id << std::endl;
-  std::cout << "Quantidade de produtos únicos: " << product_id << std::endl;
+  // std::cout << "Quantidade de clientes únicos: " << client_id << std::endl;
+  // std::cout << "Quantidade de produtos únicos: " << product_id << std::endl;
 }
 
 std::string PurchaseHistory::get_client_code_by_id(int client_id) {
