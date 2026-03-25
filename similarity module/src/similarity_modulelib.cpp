@@ -127,6 +127,7 @@ std::list<int> SimilarityModule::get_most_similar_client(unsigned int client_cod
     }
   }
   for(unsigned int i = 0; i < similarity_matrix.size(); i++) {
+    if(i == client_code) continue;
     if(similarity_matrix[client_code][i] == min_similarity)
       same_similarity_clients.push_back(i);
   }
