@@ -16,15 +16,15 @@ std::vector<std::vector<RecommendedProduct>> RecommendationModule::create_rankin
   std::vector<std::vector<RecommendedProduct>> temp = std::vector<std::vector<RecommendedProduct>>(purchase_matrix.size(), std::vector<RecommendedProduct>(purchase_matrix[0].size()));
   std::list<int> sim_clients;
 
-  for(int c = 0; c < purchase_matrix.size(); c++) {
-    for(int p = 0; p < purchase_matrix[c].size(); p++) {
+  for(unsigned int c = 0; c < purchase_matrix.size(); c++) {
+    for(unsigned int p = 0; p < purchase_matrix[c].size(); p++) {
       temp[c][p].product_id = p;
       temp[c][p].ranking_score = 1.0f;
     }
 
     sim_clients = similarity_object.get_most_similar_client(c);
     for(auto &s : sim_clients) {
-      for(int p = 0; p < purchase_matrix[c].size(); p++) {
+      for(unsigned int p = 0; p < purchase_matrix[c].size(); p++) {
         bool c_comprou = purchase_matrix[c][p];
         bool s_comprou = purchase_matrix[s][p];
         if(s_comprou && !c_comprou)  {
@@ -39,8 +39,8 @@ std::vector<std::vector<RecommendedProduct>> RecommendationModule::create_rankin
 
 std::vector<std::vector<float>> RecommendationModule::get_ranking_vector() {
   std::vector<std::vector<float>> temp = std::vector<std::vector<float>>(purchase_matrix.size(), std::vector<float>(purchase_matrix[0].size(), 1.0));
-  for(int i = 0; i < purchase_matrix.size(); i++) {
-    for(int j = 0; j < purchase_matrix[0].size(); j++) {
+  for(unsigned int i = 0; i < purchase_matrix.size(); i++) {
+    for(unsigned int j = 0; j < purchase_matrix[0].size(); j++) {
       temp[i][j] =  ranking_vector[i][j].ranking_score; 
     }
   }
@@ -49,19 +49,19 @@ std::vector<std::vector<float>> RecommendationModule::get_ranking_vector() {
 
 
 void RecommendationModule::sort_ranking_vector() {
-  for(int i = 0; i < ranking_vector.size(); i++) {
+  for(unsigned int i = 0; i < ranking_vector.size(); i++) {
     std::sort(ranking_vector[i].begin(), ranking_vector[i].end(), compare_ranking);
   }
 }
 
 
 
-std::vector<RecommendedProduct> RecommendationModule::get_recommendations(int client_id, int k) {
+std::vector<RecommendedProduct> RecommendationModule::get_recommendations(int client_id, long unsigned int k) {
   std::vector<RecommendedProduct> recommended_products;
 
   if(k > purchase_matrix[0].size()) k  = purchase_matrix[0].size(); 
 
-  for(int i = 0; i < purchase_matrix[0].size(); i++) {
+  for(long unsigned int i = 0; i < purchase_matrix[0].size(); i++) {
     if(i == k) break;
     recommended_products.push_back(ranking_vector[client_id][i]);
   }

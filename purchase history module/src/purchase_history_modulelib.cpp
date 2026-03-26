@@ -1,4 +1,3 @@
-#pragma once
 #include "../include/purchase_history_modulelib.hpp"
 
 PurchaseHistory::PurchaseHistory(int num_of_files, char **files, bool terminal) {

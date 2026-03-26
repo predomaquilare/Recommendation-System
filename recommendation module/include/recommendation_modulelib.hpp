@@ -14,7 +14,7 @@ class RecommendationModule {
   public:
     RecommendationModule(SimilarityModule& similarity);
     ~RecommendationModule();
-    std::vector<RecommendedProduct> get_recommendations(int client_id, int k);
+    std::vector<RecommendedProduct> get_recommendations(int client_id, long unsigned int k);
     std::vector<std::vector<float>> get_ranking_vector();
 
   private:
